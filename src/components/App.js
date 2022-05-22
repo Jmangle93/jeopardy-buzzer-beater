@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
+import FirstPlayer from "./FirstPlayer";
 import Header from './Header';
 import Players from './Players';
+import PlayerQueue from "./PlayerQueue";
 
 
 function App() {
@@ -14,25 +16,49 @@ function App() {
                   'j',
                   'k'];
 
-    const [players, setPlayers] = useState(Array.from(Array(8), (p, i) => "player"+(i+1)));
+  const [buzzKey, setBuzzKey] = useState();
+  const [buzzQueue, setBuzzQueue] = useState([]);
 
-    // How to ensure the first pressed occurs first? Need async here
-    function handleBuzzIn(event) {
-        keys.forEach((e, i) => {
-            if (event.key === e) {
-                console.log('key press: ' + ( i + 1));
-            }
-        });
+  const [players, setPlayers] = useState(Array.from(Array(8), (_, i) => "player"+(i+1)));
+
+  // How to ensure the first pressed occurs first? Need async here
+  function handleBuzzIn(event) {
+    if (keys.indexOf(event.key) != -1) {
+      setBuzzKey(event.key);
     }
+  }
 
-    return (
-        <div className="container players-list" onKeyDown={(e) => handleBuzzIn(e)}>
-            <Header></Header>
-            <br></br>
-            <br></br>
-            <Players players={players} setPlayers={setPlayers}></Players>
-        </div>
-    );
+  useEffect(() => {
+    if (buzzKey) {
+      setBuzzQueue(bQ => [...bQ, buzzKey]);
+    }
+  }, [buzzKey]);
+
+  useEffect(() => {
+    console.log(buzzQueue);
+  }, [buzzQueue]);
+
+  function clearBuzzins() {
+    setBuzzQueue([]);
+  }
+
+  function popFirst() {
+    setBuzzQueue(bQ => bQ.slice(1));
+  }
+
+  return (
+    <div container="container players-list">
+      <div className="container header" onKeyDown={(e) => handleBuzzIn(e)}>
+        <Header clearBuzzins={clearBuzzins}></Header>
+      </div>
+      <br></br>
+      <FirstPlayer firstPlayer={players[keys.indexOf(buzzQueue[0])]} popFirst={popFirst}></FirstPlayer>
+      <br></br>
+      <PlayerQueue playerQueue={buzzQueue.slice(1).map(key => players[keys.indexOf(key)])}></PlayerQueue>
+      <br></br>
+      <Players players={players} setPlayers={setPlayers}></Players>
+    </div>
+  );
 }
 
 export default App;
