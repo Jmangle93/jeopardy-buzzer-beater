@@ -1,5 +1,5 @@
-function clearBuzzins() {
-    console.log('clear');
+function listenBuzzins() {
+    console.log('Listening...');
 }
 
 function Header() {
@@ -8,7 +8,7 @@ function Header() {
             <div>
                 <label>Eight player Jeopardy!</label>
             </div>
-            <button className="" type="button" onClick={() => clearBuzzins()}>Clear Buzzins</button>
+            <button className="" type="button" onClick={() => listenBuzzins()}>Listen For Buzzins</button>
         </div>
     );
 }
