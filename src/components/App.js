@@ -12,32 +12,14 @@ function App() {
                     'p',
                     'h',
                     'j',
-                    'k',
-                    'l',
-                    ';'];
+                    'k'];
 
-    const [players, setPlayers] = useState(['Alice',
-                                            'Bob',
-                                            'Charles',
-                                            'Dan',
-                                            'Ed',
-                                            'Fern',
-                                            'Gloria',
-                                            'Helen',
-                                            'Ingrid',
-                                            'Joe']);
-
-    const [numPlayers, setNumPlayers] = useState(10);
-    useEffect(() => {
-        document.title = `There are ${numPlayers} players`;
-    });
-
+    const [players, setPlayers] = useState(Array.from(Array(8), (p, i) => "player"+(i+1)));
 
     function handleBuzzIn(event) {
         keys.forEach(e => {
             if (event.key === e) {
                 console.log('key press');
-                console.log(numPlayers);
             }
         });
     };
@@ -46,23 +28,16 @@ function App() {
 
     }
 
-    function handlePlayerNumber(event) {
-        setNumPlayers(event.target.value);
-    }
-
-
     function handlePlayerName(event, index) {
         players[index] = event.target.value;
     }
 
-    console.log(numPlayers);
-
     return (
         <div className="container players-list" onKeyDown={(e) => handleBuzzIn(e)}>
-            <Header maxPlayers={keys.length} numPlayers={numPlayers} setNumPlayers={setNumPlayers}></Header>
+            <Header></Header>
             <br></br>
             <br></br>
-            <Players numPlayers={numPlayers}></Players>
+            <Players players={players}></Players>
         </div>
     );
 }
