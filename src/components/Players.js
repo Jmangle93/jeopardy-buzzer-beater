@@ -11,7 +11,7 @@ function Players({players, setPlayers}) {
   }
 
   return (
-    <div className='row'>
+    <div className='row justify-content-between align-items-center'>
       {players.map((player, index) => {
         return  <div className='col-xs-10 col-sm-10 col-md-5 col-lg-5 col-sm-10 col-xs-10 p-4 mt-4' key={player}>
                   <Player playerName={player} setPlayerName={setPlayerName} index={index}></Player>

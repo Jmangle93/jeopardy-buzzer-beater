@@ -4,12 +4,14 @@ function listenBuzzins() {
 
 function Header({clearBuzzins}) {
   return (
-    <div className='row justify-content-between align-items-center mt-4'>
+    <div>
       <div>
-        <label>Eight player Jeopardy!</label>
+        <h1 className='mt-4' align='center'>Jepperdee!</h1>
       </div>
-      <button className="" type="button" onClick={() => listenBuzzins()}>Listen For Buzzins</button>
-      <button className="" type="button" onClick={() => clearBuzzins()}>Clear Buzzins</button>
+      <div className='row justify-content-between align-items-center mt-4'>
+        <button className="" type="button" onClick={() => listenBuzzins()}>Listen For Buzzins</button>
+        <button className="" type="button" onClick={() => clearBuzzins()}>Clear Buzzins</button>
+      </div>
     </div>
   );
 }
