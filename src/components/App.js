@@ -21,7 +21,6 @@ function App() {
 
   const [players, setPlayers] = useState(Array.from(Array(8), (_, i) => "player"+(i+1)));
 
-  // How to ensure the first pressed occurs first? Need async here
   function handleBuzzIn(event) {
     if (keys.indexOf(event.key) != -1) {
       setBuzzKey(event.key);
@@ -33,10 +32,6 @@ function App() {
       setBuzzQueue(bQ => [...bQ, buzzKey]);
     }
   }, [buzzKey]);
-
-  useEffect(() => {
-    console.log(buzzQueue);
-  }, [buzzQueue]);
 
   function clearBuzzins() {
     setBuzzQueue([]);

@@ -4,9 +4,9 @@ function PlayerQueue({playerQueue}) {
 
   return (
     <div>
-      {playerQueue.map(player => {
+      {playerQueue.map((player, i) => {
         return (
-        <div align="center">
+        <div align="center" key={"player-"+player+i}>
           <label>{player}</label>
         </div>
       )})}
