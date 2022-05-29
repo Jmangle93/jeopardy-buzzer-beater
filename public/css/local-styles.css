@@ -1,4 +1,30 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700");
+
+
+@font-face {
+  font-family: 'gyparody';
+  src: local('gyparody'), url(../fonts/jeopardy/gyparody.ttf);
+}
+
+@font-face {
+  font-family: 'ITCKorinnaBold';
+  src: local('ITCKorinnaBold'), url(../fonts/ITCKorinnaBold/ITCKorinnaBold.ttf);
+}
+
+h1 {
+  font-family: gyparody;
+}
+
+h5 {
+  font-family: ITCKorinnaBold;
+}
+
+label {
+  font-family: ITCKorinnaBold;
+}
+
+button {
+  font-family: ITCKorinnaBold;
+}
 
 a {
     transition: all 0.3s ease-out 0s;

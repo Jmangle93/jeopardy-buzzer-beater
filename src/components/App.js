@@ -1,70 +1,59 @@
 import { useEffect, useState } from "react";
 
+import FirstPlayer from "./FirstPlayer";
 import Header from './Header';
 import Players from './Players';
+import PlayerQueue from "./PlayerQueue";
 
 
 function App() {
   const keys =   ['y',
-                    'u',
-                    'i',
-                    'o',
-                    'p',
-                    'h',
-                    'j',
-                    'k',
-                    'l',
-                    ';'];
+                  'u',
+                  'i',
+                  'o',
+                  'p',
+                  'h',
+                  'j',
+                  'k'];
 
-    const [players, setPlayers] = useState(['Alice',
-                                            'Bob',
-                                            'Charles',
-                                            'Dan',
-                                            'Ed',
-                                            'Fern',
-                                            'Gloria',
-                                            'Helen',
-                                            'Ingrid',
-                                            'Joe']);
+  const [buzzQueue, setBuzzQueue] = useState([]);
 
-    const [numPlayers, setNumPlayers] = useState(10);
-    useEffect(() => {
-        document.title = `There are ${numPlayers} players`;
-    });
+  const [players, setPlayers] = useState(Array.from(Array(8), (_, i) => "player" + (i+1)));
 
-
-    function handleBuzzIn(event) {
-        keys.forEach(e => {
-            if (event.key === e) {
-                console.log('key press');
-                console.log(numPlayers);
-            }
-        });
-    };
-
-    function handleUpdates(event) {
-
+  function handleBuzzIn(event) {
+    if (keys.indexOf(event.key) != -1) {
+      addPlayerToQueue(event.key);
     }
+  }
 
-    function handlePlayerNumber(event) {
-        setNumPlayers(event.target.value);
+  function addPlayerToQueue(playerKey) {
+    console.log(playerKey);
+    if (playerKey && buzzQueue.indexOf(playerKey) == -1) {
+      setBuzzQueue(bQ => [...bQ, playerKey]);
     }
+  }
 
+  function clearBuzzins() {
+    setBuzzQueue([]);
+  }
 
-    function handlePlayerName(event, index) {
-        players[index] = event.target.value;
-    }
+  function popFirst() {
+    setBuzzQueue(bQ => bQ.slice(1));
+  }
 
-    console.log(numPlayers);
-
-    return (
-        <div className="container players-list" onKeyDown={(e) => handleBuzzIn(e)}>
-            <Header maxPlayers={keys.length} numPlayers={numPlayers} setNumPlayers={setNumPlayers}></Header>
-            <br></br>
-            <br></br>
-            <Players numPlayers={numPlayers}></Players>
-        </div>
-    );
+  return (
+    <div container="container app">
+      <div className="container header" onKeyDown={(e) => handleBuzzIn(e)}>
+        <Header clearBuzzins={clearBuzzins}></Header>
+      </div>
+      <br></br>
+      <FirstPlayer firstPlayer={players[keys.indexOf(buzzQueue[0])]} popFirst={popFirst}></FirstPlayer>
+      <br></br>
+      <PlayerQueue playerQueue={buzzQueue.slice(1).map(key => players[keys.indexOf(key)])}></PlayerQueue>
+      <br></br>
+      <Players players={players} setPlayers={setPlayers}></Players>
+    </div>
+  );
 }
 
 export default App;
