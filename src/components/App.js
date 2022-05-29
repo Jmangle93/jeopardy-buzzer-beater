@@ -16,22 +16,22 @@ function App() {
                   'j',
                   'k'];
 
-  const [buzzKey, setBuzzKey] = useState();
   const [buzzQueue, setBuzzQueue] = useState([]);
 
-  const [players, setPlayers] = useState(Array.from(Array(8), (_, i) => "player"+(i+1)));
+  const [players, setPlayers] = useState(Array.from(Array(8), (_, i) => "player" + (i+1)));
 
   function handleBuzzIn(event) {
     if (keys.indexOf(event.key) != -1) {
-      setBuzzKey(event.key);
+      addPlayerToQueue(event.key);
     }
   }
 
-  useEffect(() => {
-    if (buzzKey) {
-      setBuzzQueue(bQ => [...bQ, buzzKey]);
+  function addPlayerToQueue(playerKey) {
+    console.log(playerKey);
+    if (playerKey && buzzQueue.indexOf(playerKey) == -1) {
+      setBuzzQueue(bQ => [...bQ, playerKey]);
     }
-  }, [buzzKey]);
+  }
 
   function clearBuzzins() {
     setBuzzQueue([]);
@@ -42,7 +42,7 @@ function App() {
   }
 
   return (
-    <div container="container players-list">
+    <div container="container app">
       <div className="container header" onKeyDown={(e) => handleBuzzIn(e)}>
         <Header clearBuzzins={clearBuzzins}></Header>
       </div>
